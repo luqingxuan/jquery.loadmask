@@ -2,8 +2,11 @@
 (function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD
-		define([ 'jquery' ], factory);
+		define([ 'jquery', './jquery.loadmask.css' ], factory);
 	} else if (typeof exports === 'object') {
+
+		require("./jquery.loadmask.css");
+
 		// Node, CommonJS之类的
 		module.exports = factory(require('jquery'));
 	} else {
