@@ -60,7 +60,7 @@
 
 	});
 
-	// 有些元素需要包装一层DIV去执行MASK
+	// 有些元素需要包装一层DIV去执行MASK,当然尽量不要使用特殊元素MASK了
 	function isElementAskDiv($ele) {
 
 		var tagName = $ele[0].tagName;
@@ -68,42 +68,44 @@
 		if (tagName == 'TABLE')
 			return true;
 
+		if (tagName == 'DL')
+			return true;
+
+		if (tagName == 'UL' || tagName == 'OL')
+			return true;
+
 		return false;
 	}
 
 	function calMaskElementRect($ele) {
 
-		if ($ele[0].tagName == 'BODY') {
+		if ($ele[0].tagName != 'BODY')
+			return {
+				height : $ele.outerHeight(),
+				width : $ele.outerWidth()
+			};
 
-			var width = window.innerWidth, height = window.innerHeight;
+		var width = window.innerWidth, height = window.innerHeight;
 
-			if (typeof width != 'number') {// IE 5/6/7/8
+		if (typeof width != 'number') {// IE 5/6/7/8
 
-				if (document.compatMode == 'CSS1Compat') {
-
-					width = document.documentElement.clientWidth;
-
-					height = document.docuementElement.clientHeight;
-
-				} else {
-
-					width = document.body.clientWidth;
-
-					height = document.body.clientHeight;
-
-				}
-			}
+			if (document.compatMode == 'CSS1Compat')
+				return {
+					height : document.documentElement.clientWidth,
+					width : document.docuementElement.clientHeight
+				};
 
 			return {
-				width : width,
-				height : height
+				height : document.body.clientWidth,
+				width : document.body.clientHeight
 			};
 		}
 
 		return {
-			height : $ele.outerHeight(),
-			width : $ele.outerWidth()
+			width : width,
+			height : height
 		};
+
 	}
 
 	function reposIcon($maskEle, $icon) {
