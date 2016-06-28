@@ -246,27 +246,19 @@
 	}
 
 	$.fn.mask = function(options) {
-
 		options = options || {};
-
 		$(this).each(function() {
-
 			maskElement($(this), options);
-
 		});
 	};
 
 	$.fn.unmask = function() {
-
 		$(this).each(function() {
-
 			unMaskElement($(this));
-
 		});
 	};
 
 	$.fn.isMasked = function() {
-
 		return (this.data("masked") || 0) > 1;
 	};
 
